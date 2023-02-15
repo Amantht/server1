@@ -1,86 +1,218 @@
-
-const express=require('express');
-const users=require('./Users');
-const app=express();
-const uuid=require('uuid');
-const idFilter = req => member => member.id === parseInt(req.params.id);
-app.use(express.json());
+//program to insert one document in MongoDB
 
 
-//GET All USERS
-app.get("/api/users",(req,res)=>res.json(users));
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const doc = { name: "srithar", dept: "cse", course: "mswd"};
+// const result = await fc.insertOne(doc);
+// console.log ('insert success');
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
+
+
+//program to insert many document in MongoDB
+
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const doc = [ 
+//   {name: "srithar", dept: "cse", course: "mswd", marks:100},
+//   {name: "Aman", dept: "cse-honors", course: "pfsd",marks:99},
+//   {name: "Rajesh", dept: "bt", course: "biotech",marks:98},
+//   {name: "Anuj", dept: "eee", course: "electricity",marks:97},
+//   {name: "Sambandha", dept: "civil", course: "construction",marks:96},
+//   {name: "Sushant", dept: "me", course: "mechanics",marks:95},
+// ];
+// const result = await fc.insertMany(doc);
+// console.log ('documents were inserted');
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
+
+//program to find document in MongoDB
+
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const filter={dept:"Mech"};
+// const result=await fc.findOne(filter);
+// console.log(result);
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
+
+
+//program to deleteOne document in MongoDB
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const filter={ dept:"cse"};
+// const result=await fc.deleteOne(filter);
+// console.log("document was deleted");
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
 
 
 
 
-//CREATE A NEW USER 
-  app.post('/api/users',(req,res)=>{
-    const newMember={
-      id: uuid.v4(),
-      name: req.body.name,
-      email: req.body.email,
-      status: 'guest'
-    };
-    if(!newMember.name || !newMember.email){
-      return res.status(400).json({msg:'NAME and EMAIL Must be provided'});
-    }
-    users.push(newMember);
-    res.json(users);
-  }
-  );
+//program to delte Many document in MongoDB
 
-  //DELETE Specific USER Based on ID
-  app.delete('/api/users/:id', (req, res) => {
-    const found = users.some(idFilter(req));
-  
-    if (found) {
-      res.json({msg:'Deleted',
-      members:users.filter(
-        member=>member.id!==parseInt(req.params.id))})
-    
-    } else {
-      res.status(400).json('{ msg: No member with the id of ${req.params.id} }');
-    }
-  });
-
-  //UPDATE Specific USER Based on ID
-app.put('/api/users/:id',(req,res)=>
-{
-    const found = users.some(member=>member.id===parseInt(req.params.id));
-
-  if(found)
-  {
-    const updMember=req.body;
-    users.forEach(
-        member=>{
-            if(member.id===parseInt(req.params.id))
-            {
-                member.name=updMember ? updMember.name : member.name;
-                member.email=updMember.email ? updMember.email : member.email;
-            res.json({msg:'Updated Details',member})
-              }
-        }
-    );
-  }
-  else{
-    res.status(400).json({msg:'No User found with ${req.params.id}'});
-  }
-});
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const filter={ name:"srithar"};
+// const result=await fc.deleteMany(filter);
+// console.log("documents were deleted");
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
 
 
 
-//GET Specific USER Based on ID
-app.get('/api/users/:id', (req, res) => {
-  const found = users.some(idFilter(req));
+//program to replace one document in MongoDB
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const filter = { name: "srithar" };
+// const doc = {
+// name: "suresh",
+// dept: "CSE", 
+// course: "Adv. Java",
+// marks:"100"
+// };
+// const result = await fc. replaceOne(filter, doc);
+// console.log("documents were replaced");
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
 
-  if (found) {
-    res.json(users.filter(idFilter(req)));
-  } else {
-    res.status(400).json('{msg: No member with the id of ${req.params.id}}');
-  }
-});
+
+// program to update one document in MongoDB
+  // const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const filter = { name: "srithar" };
+// const doc = {
+// $set: {dept: "BT" }, };
+// const result = await fc.updateOne(filter, doc);
+// console.log ("documents were updated");
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
 
 
 
-const PORT=8082;
-app.listen(PORT, () => console.log('Server is Running ${PORT}'));
+//program to update many document in MongoDB
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const filter = { course: "mswd" };
+// const doc = {
+// $set: { dept: "BT1" }, };
+// const result = await fc. updateMany(filter, doc);
+// console.log("documents were updated");
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
+
+
+
+//program to sort document in MongoDB
+
+
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+// const filter = { dept:"cse"};
+// const sort = { marks: -1 }; // Sort in descending order by marks
+// const result = await fc.find(filter).sort(sort).limit(1).toArray();
+// console.log(result[0]);
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
+
+// program to sort based on marks below
+
+// const { MongoClient } = require("mongodb");
+// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+// async function run() {
+// try {
+// await client.connect;
+// const database = client.db("first");
+// const fc = database.collection("student");
+//   const filter = { marks: { $gte: 97, $lte: 100 } }; // Filter for marks between 80 and 90
+//   const results = await fc.find(filter).toArray();
+//   console.log(results);
+// } finally {
+// await client.close();
+// }
+// } 
+// run().catch(console.dir);
+
