@@ -199,20 +199,20 @@
 
 // program to sort based on marks below
 
-// const { MongoClient } = require("mongodb");
-// const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
-// const client = new MongoClient(uri);
-// async function run() {
-// try {
-// await client.connect;
-// const database = client.db("first");
-// const fc = database.collection("student");
-//   const filter = { marks: { $gte: 97, $lte: 100 } }; // Filter for marks between 80 and 90
-//   const results = await fc.find(filter).toArray();
-//   console.log(results);
-// } finally {
-// await client.close();
-// }
-// } 
-// run().catch(console.dir);
+const { MongoClient } = require("mongodb");
+const uri ="mongodb+srv://aman:Nepal123@cluster0.aqmkc3t.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
+async function run() {
+try {
+await client.connect;
+const database = client.db("first");
+const fc = database.collection("student");
+  const filter = { marks: { $gte: 99, $lte: 100 } }; // Filter for marks between 80 and 90
+  const results = await fc.find(filter).toArray();
+  console.log(results);
+} finally {
+await client.close();
+}
+} 
+run().catch(console.dir);
 
